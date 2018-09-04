@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.chat.dao.MessageDao">
+    <resultMap id="messageResultMap" type="com.yunji.dango.chat.model.Message">
+        <id column="id" property="id"/>
+        <result column="from_id" property="fromId"/>
+        <result column="to_id" property="toId"/>
+        <result column="message" property="message"/>
+        <result column="type" property="type"/>
+        <result column="time" property="time"/>
+        <result column="project_id" property="projectId"/>
+    </resultMap>
+
+    <sql id="table">
+        message
+    </sql>
+
+    <insert id="insertMessage" parameterType="com.yunji.dango.chat.model.Message" useGeneratedKeys="true" keyProperty="id" >
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fromId != null ">from_id,</if>
+            <if test="toId != null ">to_id,</if>
+            <if test="message != null and message != ''">message,</if>
+            <if test="type != null ">type,</if>
+            <if test="time != null and time != ''">time,</if>
+            <if test="projectId != null">project_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fromId != null ">#{fromId},</if>
+            <if test="toId != null ">#{toId},</if>
+            <if test="message != null and message != ''">#{message},</if>
+            <if test="type != null ">#{type},</if>
+            <if test="time != null and time != ''">#{time},</if>
+            <if test="projectId != null">#{projectId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTypeByID">
+        update <include refid="table"/> set type=#{type} where id=#{id}
+    </update>
+
+    <update id="updateTypeByToID">
+        update <include refid="table"/> set type=#{type} where from_id=#{fromId} and to_id=#{toId}
+    </update>
+
+    <select id="findMessageByUserId" resultMap="messageResultMap">
+        select * from <include refid="table"/>
+        where (from_id=#{id1} and to_id=#{id2}) or (from_id=#{id2} and to_id=#{id1})
+        order by time desc
+    </select>
+
+    <select id="findChatList" resultMap="messageResultMap">
+        select distinct from_id,to_id from <include refid="table"/> where from_id=#{id} or to_id=#{id}
+    </select>
+
+    <select id="findLastMessage" resultType="com.yunji.dango.chat.model.Message">
+        select * from <include refid="table"/> where (from_id=#{id1} and to_id=#{id2}) or (from_id=#{id2} and to_id=#{id1})
+        order by time desc limit 1
+    </select>
+</mapper>

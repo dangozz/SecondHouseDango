@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.shiro.dao.AdminDao">
+    <resultMap id="adminResultMap" type="com.yunji.dango.shiro.model.Admin">
+        <id column="id" property="id"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="position" property="position"/>
+        <result column="department" property="department"/>
+        <result column="openid" property="openid"/>
+    </resultMap>
+
+    <sql id="table">
+        admin
+    </sql>
+
+    <select id="findAllModel" resultMap="adminResultMap">
+        select * from <include refid="table"/>
+    </select>
+
+    <select id="findTotal" resultType="java.lang.Integer">
+        select count(*) from <include refid="table"/>
+    </select>
+
+    <select id="findOneModel" resultType="com.yunji.dango.shiro.model.Admin">
+        select * from <include refid="table"/>
+        <trim prefix="where " suffixOverrides="and">
+            <if test="id != null">id=#{id} and</if>
+            <if test="password != null and password !=''">password=#{password} and</if>
+            <if test="name != null and name !=''">name=#{name} and</if>
+            <if test="phone != null and phone !=''">phone=#{phone} and</if>
+            <if test="position != null and position !=''">position=#{position} and</if>
+            <if test="department != null and department !=''">department=#{department} and</if>
+            <if test="openid != null and openid !=''">openid=#{openid} and</if>
+        </trim>
+        limit 1
+    </select>
+
+
+    <insert id="insertModel" parameterType="com.yunji.dango.shiro.model.Admin">
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.password != null and t.password != ''">password,</if>
+            <if test="t.name != null and t.name != ''">name,</if>
+            <if test="t.phone != null and t.phone != ''">phone,</if>
+            <if test="t.position != null and t.position != ''">position,</if>
+            <if test="t.department != null and t.department != ''">department,</if>
+            <if test="t.openid != null and t.openid != ''">openid,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.password != null and t.password != ''">#{t.password},</if>
+            <if test="t.name != null and t.name != ''">#{t.name},</if>
+            <if test="t.phone != null and t.phone != ''">#{t.phone},</if>
+            <if test="t.position != null and t.position != ''">#{t.position},</if>
+            <if test="t.department != null and t.department != ''">#{t.department},</if>
+            <if test="t.openid != null and t.openid != ''">#{t.openid},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteModel" parameterType="com.yunji.dango.shiro.model.Admin">
+        delete from <include refid="table"/> where
+        <trim suffixOverrides="and">
+            <if test="t.id != null and t.id != ''">id=#{t.id} and</if>
+            <if test="t.password != null and t.password != ''">#{t.password} and</if>
+            <if test="t.name != null and t.name != ''">#{t.name} and</if>
+            <if test="t.phone != null and t.phone != ''">#{t.phone} and</if>
+            <if test="t.position != null and t.position != ''">#{t.position} and</if>
+            <if test="t.department != null and t.department != ''">#{t.department} and</if>
+            <if test="t.openid != null and t.openid != ''">#{t.openid} and</if>
+        </trim>
+    </delete>
+
+    <update id="updateModel"  parameterType="com.yunji.dango.shiro.model.Admin">
+        update <include refid="table"/> set
+        <trim suffixOverrides=",">
+            <if test="t.password != null and t.password != ''">password=#{t.password},</if>
+            <if test="t.name != null and t.name != ''">name=#{t.name},</if>
+            <if test="t.phone != null and t.phone != ''">phone=#{t.phone},</if>
+            <if test="t.position != null and t.position != ''">position=#{t.position},</if>
+            <if test="t.department != null and t.department != ''">department=#{t.department},</if>
+            <if test="t.openid != null and t.openid != ''">openid=#{t.openid},</if>
+        </trim>
+        where id=#{t.id}
+    </update>
+
+
+    <delete id="deleteAdminRoleByAdminId">
+        delete from admin_role where admin_id = #{admin_id}
+    </delete>
+
+    <insert id="updateAdminRole">
+        insert into admin_role (admin_id,role_id) values
+        <foreach collection="list" item="value" separator=",">
+            (#{value.admin_id},#{value.role_id})
+        </foreach>
+    </insert>
+
+</mapper>

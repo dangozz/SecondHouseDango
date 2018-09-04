@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.secondhouse.dao.SecondHandHouseDao">
+
+    <resultMap id="secondHandHouseResultMap" type="com.yunji.dango.secondhouse.model.SecondHandHouse">
+        <id column="id" property="id"/>
+        <result column="titel" property="titel"/>
+        <result column="price" property="price"/>
+        <result column="houseType" property="houseType"/>
+        <result column="area" property="area"/>
+        <result column="univalent" property="univalent"/>
+        <result column="orientation" property="orientation"/>
+        <result column="floor" property="floor"/>
+        <result column="decoration" property="decoration"/>
+        <result column="indexImg" property="indexImg"/>
+        <result column="flag" property="flag"/>
+        <result column="type" property="type"/>
+        <result column="year" property="year"/>
+        <result column="region" property="region"/>
+        <result column="village" property="village"/>
+        <result column="auditState" property="auditState"/>
+        <result column="shelfState" property="shelfState"/>
+        <result column="dateTime" property="dateTime"/>
+    </resultMap>
+
+    <sql id="table">
+        opening_secondhandhouse
+    </sql>
+
+    <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHandHouse">
+        select * from <include refid="table"/> where id=#{id} limit 1
+    </select>
+
+</mapper>

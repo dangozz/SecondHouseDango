@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.shiro.dao.PermissionDao">
+    <resultMap id="permissionResultMap" type="com.yunji.dango.shiro.model.Permission">
+        <id column="id" property="id"/>
+        <result column="description" property="description"/>
+        <result column="level" property="level"/>
+        <result column="parentId" property="parentId"/>
+        <result column="permissionName" property="permissionName"/>
+        <result column="type" property="type"/>
+        <result column="url" property="url"/>
+    </resultMap>
+
+    <sql id="table">
+        permission
+    </sql>
+
+    <select id="findAllModel" resultMap="permissionResultMap">
+        select * from <include refid="table"/>
+    </select>
+
+    <select id="findTotal" resultType="java.lang.Integer">
+        select count(*) from <include refid="table"/>
+    </select>
+
+    <select id="findOneModel" resultType="com.yunji.dango.shiro.model.Permission">
+        select * from <include refid="table"/>
+        <trim prefix="where " suffixOverrides="and">
+            <if test="id != null">id=#{id} and</if>
+            <if test="description != null and description !=''">description=#{description} and</if>
+            <if test="level != null and level !=''">level=#{level} and</if>
+            <if test="parentId != null and parentId !=''">parentId=#{parentId} and</if>
+            <if test="permissionName != null and permissionName !=''">permissionName=#{permissionName} and</if>
+            <if test="type != null and type !=''">type=#{type} and</if>
+            <if test="url != null and url !=''">url=#{url} and</if>
+        </trim>
+        limit 1
+    </select>
+
+    <insert id="insertModel" parameterType="com.yunji.dango.shiro.model.Permission">
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.description != null and t.description != ''">description,</if>
+            <if test="t.level != null">level,</if>
+            <if test="t.parentId != null">parentId,</if>
+            <if test="t.permissionName != null and t.permissionName != ''">permissionName,</if>
+            <if test="t.type != null and t.type != ''">type,</if>
+            <if test="t.url != null and t.url != ''">url,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.description != null and t.description != ''">#{t.description},</if>
+            <if test="t.level != null">#{t.level},</if>
+            <if test="t.parentId != null">#{t.parentId},</if>
+            <if test="t.permissionName != null and t.permissionName != ''">#{t.permissionName},</if>
+            <if test="t.type != null and t.type != ''">#{t.type},</if>
+            <if test="t.url != null and t.url != ''">#{t.url},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteModel" parameterType="com.yunji.dango.shiro.model.Permission">
+        delete from <include refid="table"/> where
+        <trim suffixOverrides="and">
+            <if test="t.id != null">id=#{t.id} and</if>
+            <if test="t.description != null and t.description != ''">description=#{t.description} and</if>
+            <if test="t.level != null">level=#{t.level} and</if>
+            <if test="t.parentId != null">parentId=#{t.parentId} and</if>
+            <if test="t.permissionName != null and t.permissionName != ''">permissionName=#{t.permissionName} and</if>
+            <if test="t.type != null and t.type != ''">type=#{t.type} and</if>
+            <if test="t.url != null and t.url != ''">url=#{t.url} and</if>
+        </trim>
+    </delete>
+
+    <update id="updateModel" parameterType="com.yunji.dango.shiro.model.Permission">
+        update <include refid="table"/> set
+        <trim suffixOverrides=",">
+            <if test="t.description != null and t.description != ''">description=#{t.description} ,</if>
+            <if test="t.level != null">level=#{t.level} ,</if>
+            <if test="t.parentId != null">parentId=#{t.parentId} ,</if>
+            <if test="t.permissionName != null and t.permissionName != ''">permissionName=#{t.permissionName} ,</if>
+            <if test="t.type != null and t.type != ''">type=#{t.type} ,</if>
+            <if test="t.url != null and t.url != ''">url=#{t.url} ,</if>
+        </trim>
+        where id=#{t.id}
+    </update>
+
+    <select id="findRolePermission" resultMap="permissionResultMap">
+        select * from <include refid="table"/> where id in (
+        select permission_id from role_permission where role_id = #{id}
+        )
+    </select>
+
+    <delete id="deleteRolePermission">
+        delete from role_permission where permission_id=#{id}
+    </delete>
+
+</mapper>

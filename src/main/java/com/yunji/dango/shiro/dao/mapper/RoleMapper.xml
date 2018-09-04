@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.shiro.dao.RoleDao">
+    <resultMap id="roleResultMap" type="com.yunji.dango.shiro.model.Role">
+        <id column="id" property="id"/>
+        <result column="roleName" property="roleName"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+    <sql id="table">
+        role
+    </sql>
+
+    <select id="findAllModel" resultMap="roleResultMap">
+        select * from <include refid="table"/>
+    </select>
+
+    <select id="findTotal" resultType="java.lang.Integer">
+        select count(*) from <include refid="table"/>
+    </select>
+
+    <select id="findOneModel" resultType="com.yunji.dango.shiro.model.Role">
+        select * from <include refid="table"/>
+        <trim prefix="where " suffixOverrides="and">
+            <if test="id != null">id=#{id} and</if>
+            <if test="roleName != null and roleName !=''">roleName=#{roleName} and</if>
+            <if test="description != null and description !=''">description=#{description} and</if>
+        </trim>
+        limit 1
+    </select>
+
+
+    <insert id="insertModel" parameterType="com.yunji.dango.shiro.model.Role">
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.roleName != null and t.roleName != ''">roleName,</if>
+            <if test="t.description != null and t.description != ''">description,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.roleName != null and t.roleName != ''">#{t.roleName},</if>
+            <if test="t.description != null and t.description != ''">#{t.description},</if>
+        </trim>
+    </insert>
+
+    <delete id="deleteModel" parameterType="com.yunji.dango.shiro.model.Role">
+        delete from <include refid="table"/> where
+        <trim suffixOverrides="and">
+            <if test="t.id != null and t.id != ''">id=#{t.id} and</if>
+            <if test="t.roleName != null and t.roleName != ''">roleName=#{t.roleName} and</if>
+            <if test="t.description != null and t.description != ''">description=#{t.description} and</if>
+        </trim>
+    </delete>
+
+    <update id="updateModel"  parameterType="com.yunji.dango.shiro.model.Role">
+        update <include refid="table"/> set
+        <trim suffixOverrides=",">
+            <if test="t.roleName != null and t.roleName != ''">roleName=#{t.roleName} ,</if>
+            <if test="t.description != null and t.description != ''">description=#{t.description} ,</if>
+        </trim>
+        where id=#{t.id}
+    </update>
+
+    <select id="findAdminRole" resultMap="roleResultMap">
+        select * from <include refid="table"/> where id in (
+        select role_id from admin_role where admin_id = #{id}
+        )
+    </select>
+
+    <delete id="deleteAdminRole">
+        delete from admin_role where role_id = #{id}
+    </delete>
+
+    <delete id="deleteRolePermissionByRoleId">
+        delete from role_permission where role_id = #{role_id}
+    </delete>
+
+    <insert id="updateRolePermisson">
+        insert into role_permission (role_id,permission_id) values
+        <foreach collection="list" item="value" separator=",">
+            (#{value.role_id},#{value.permission_id})
+        </foreach>
+    </insert>
+
+</mapper>

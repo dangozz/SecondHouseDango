@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.chat.dao.WxUserDao">
+    <resultMap id="messageResultMap" type="com.yunji.dango.chat.model.WxUser">
+        <id column="id" property="id"/>
+        <result column="openid" property="openid"/>
+        <result column="name" property="name"/>
+        <result column="image" property="image"/>
+        <result column="phone" property="phone"/>
+        <result column="friend" property="friend"/>
+        <result column="company" property="company"/>
+    </resultMap>
+
+    <sql id="table">
+        wxuser
+    </sql>
+
+    <insert id="insertWxUser" parameterType="com.yunji.dango.chat.model.WxUser" useGeneratedKeys="true" keyProperty="id" >
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openid != null and openid != ''">openid,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="image != null and image != ''">image,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="friend != null and friend != ''">friend,</if>
+            <if test="company != null and company != ''">company,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openid != null and openid != ''">#{openid},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="image != null and image != ''">#{image},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="friend != null and friend != ''">#{friend},</if>
+            <if test="company != null and company != ''">#{company},</if>
+        </trim>
+    </insert>
+
+    <select id="findOneModel" resultType="com.yunji.dango.chat.model.WxUser">
+        select * from <include refid="table"/>
+        <trim prefix="where " suffixOverrides="and">
+            <if test="id != null">id=#{id} and</if>
+            <if test="openid != null and openid !=''">openid=#{openid} and</if>
+            <if test="name != null and name !=''">name=#{name} and</if>
+            <if test="image != null and image !=''">image=#{image} and</if>
+            <if test="phone != null and phone !=''">phone=#{phone} and</if>
+            <if test="friend != null and friend !=''">friend=#{friend} and</if>
+            <if test="company != null and company !=''">company=#{company} and</if>
+        </trim>
+        limit 1
+    </select>
+
+    <update id="updateModel" >
+        update <include refid="table"/> set
+        <!--name=#{t.name} ,image=#{t.image} where openid=#{t.openid}-->
+        <trim suffixOverrides=",">
+            <if test="t.name !=null and t.name !=''">name=#{t.name},</if>
+            <if test="t.image !=null and t.image !=''">image=#{t.image},</if>
+            <if test="t.phone !=null and t.phone !=''">phone=#{t.phone},</if>
+            <if test="t.friend !=null and t.friend !=''">friend=#{t.friend},</if>
+            <if test="t.company !=null and t.company !=''">friend=#{t.company},</if>
+        </trim>
+        where openid=#{t.openid}
+    </update>
+
+
+</mapper>

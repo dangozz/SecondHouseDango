@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.secondhouse.dao.SecondHouseImageDao">
+
+    <resultMap id="secondHouseImageResultMap" type="com.yunji.dango.secondhouse.model.SecondHouseImage">
+        <id column="id" property="id"/>
+        <result column="description" property="description"/>
+        <result column="imageUrl" property="imageUrl"/>
+        <result column="parentId" property="parentId"/>
+    </resultMap>
+
+    <sql id="table">
+        secondhouseimage
+    </sql>
+
+    <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHouseImage">
+        select * from <include refid="table"/> where parentId=#{id} limit 1
+    </select>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.secondhouse.dao.CollectionDao">
+
+    <resultMap id="collectionRecordResultMap" type="com.yunji.dango.secondhouse.model.Collection">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="target_id" property="targetId"/>
+        <result column="time" property="time"/>
+    </resultMap>
+
+
+    <sql id="table">
+        secondhouse_collection
+    </sql>
+
+    <insert id="insertModel">
+        insert into
+        <include refid="table"/>
+        (user_id,target_id,time)
+        values
+        (#{t.userId},#{t.targetId},#{t.time})
+    </insert>
+
+    <select id="findModelByCondition" resultMap="collectionRecordResultMap">
+        SELECT * from
+        <include refid="table"/>
+        where
+        <trim suffixOverrides="and">
+            <if test="userId != null ">
+                user_id=#{userId} and
+            </if>
+            <if test="targetId != null">
+                target_id=#{targetId} and
+            </if>
+        </trim>
+    </select>
+
+    <delete id="deleteModel">
+        delete from
+        <include refid="table"/>
+        where user_id=#{t.userId}
+        <if test="t.targetId != null and t.targetId != -1">
+            and target_id=#{t.targetId}
+        </if>
+
+    </delete>
+
+</mapper>

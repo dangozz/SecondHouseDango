@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.secondhouse.dao.SecondHouseDetailDao">
+
+    <resultMap id="secondHouseDetailResultMap" type="com.yunji.dango.secondhouse.model.SecondHouseDetail">
+        <id column="id" property="id"/>
+        <result column="coreSelling" property="coreSelling"/>
+        <result column="proprietorState" property="proprietorState"/>
+        <result column="matching" property="matching"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="userName" property="userName"/>
+        <result column="phone" property="phone"/>
+        <result column="city" property="city"/>
+        <result column="region" property="region"/>
+        <result column="detailAddress" property="detailAddress"/>
+        <result column="parentId" property="parentId"/>
+    </resultMap>
+
+    <sql id="table">
+        housedetail
+    </sql>
+
+    <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHouseDetail">
+        select * from <include refid="table"/> where parentid=#{id} limit 1
+    </select>
+
+</mapper>

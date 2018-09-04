@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.secondhouse.dao.BrowseRecordDao">
+
+    <resultMap id="browseRecordResultMap" type="com.yunji.dango.secondhouse.model.BrowseRecord">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="target_id" property="targetId"/>
+        <result column="record_time" property="recordTime"/>
+    </resultMap>
+
+
+    <sql id="table">
+        browse_records
+    </sql>
+
+    <insert id="insertModel">
+        insert into <include refid="table"/>
+        (user_id,target_id,record_time,flag)
+        values
+        (#{t.userId},#{t.targetId},#{t.recordTime},#{t.flag})
+    </insert>
+
+    <select id="findModelByCondition" resultMap="browseRecordResultMap">
+        SELECT * from <include refid="table"/>
+        where user_id=#{userId}
+    </select>
+
+    <select id="findOneModel" resultType="com.yunji.dango.secondhouse.model.BrowseRecord">
+        select * from <include refid="table"/>
+        where user_id=#{userId} and target_id=#{targetId}
+        limit 1
+    </select>
+
+    <update id="updateModel">
+        update <include refid="table"/>
+        set record_time = #{t.recordTime}
+        where id=#{t.id}
+    </update>
+
+    <delete id="deleteModel">
+        delete from
+        <include refid="table"/>
+        where user_id=#{t.userId}
+        <if test="t.targetId != null and t.targetId != -1">
+            and target_id=#{t.targetId}
+        </if>
+    </delete>
+
+</mapper>
