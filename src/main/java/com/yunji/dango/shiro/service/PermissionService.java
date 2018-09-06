@@ -4,7 +4,7 @@ import com.yunji.dango.shiro.model.Permission;
 import java.util.List;
 
 public interface PermissionService extends BaseService<Permission>{
-    List<Permission> findRolePermission(Integer paramInteger);
+    List<Permission> findRolePermission(Integer id);
 
-    Integer deleteRolePermission(Integer paramInteger);
+    Integer deleteRolePermission(Integer id);
 }

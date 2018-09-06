@@ -59,7 +59,11 @@
             <if test="t.friend !=null and t.friend !=''">friend=#{t.friend},</if>
             <if test="t.company !=null and t.company !=''">friend=#{t.company},</if>
         </trim>
-        where openid=#{t.openid}
+        where
+        <trim suffixOverrides=" and">
+            <if test="t.openid != null and t.openid !=''">openid=#{t.openid} and</if>
+            <if test="t.id != null">id=#{t.id} and</if>
+        </trim>
     </update>
 
 

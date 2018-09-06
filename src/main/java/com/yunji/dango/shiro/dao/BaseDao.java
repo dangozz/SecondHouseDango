@@ -11,13 +11,13 @@ public interface BaseDao<T>{
 
     T findOneModel(Map<String, String> paramMap);
 
-    T findModelById(@Param("id") Integer paramInteger);
+    T findModelById(@Param("id") Integer id);
 
-    int insertModel(@Param("t") T paramT);
+    int insertModel(@Param("t") T t);
 
-    int deleteModel(@Param("t") T paramT);
+    int deleteModel(@Param("t") T t);
 
-    int updateModel(@Param("t") T paramT);
+    int updateModel(@Param("t") T t);
 
     int findTotal();
 }

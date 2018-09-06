@@ -7,11 +7,11 @@ import java.util.List;
 public interface MessageService extends BaseService<Message>{
     Integer insertMessage(Message paramMessage);
 
-    Integer updateTypeByID(Integer paramInteger1, Integer paramInteger2);
+    Integer updateTypeByID(Integer id, Integer type);
 
-    Integer updateTypeByToID(Integer paramInteger1, Integer paramInteger2, Integer paramInteger3);
+    Integer updateTypeByToID(Integer fromId, Integer toId, Integer type);
 
-    List<Message> findMessageByUserId(Integer paramInteger1, Integer paramInteger2);
+    List<Message> findMessageByUserId(Integer id1, Integer id2);
 
     List<Message> findChatList(Integer id);
 

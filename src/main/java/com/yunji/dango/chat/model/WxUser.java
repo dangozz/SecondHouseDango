@@ -24,7 +24,7 @@ public class WxUser implements Serializable{
     }
 
     public Integer getId(){
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id){
@@ -32,7 +32,7 @@ public class WxUser implements Serializable{
     }
 
     public String getOpenid(){
-        return this.openid;
+        return openid;
     }
 
     public void setOpenid(String openid){
@@ -40,7 +40,7 @@ public class WxUser implements Serializable{
     }
 
     public String getName(){
-        return this.name;
+        return name;
     }
 
     public void setName(String name){
@@ -48,7 +48,7 @@ public class WxUser implements Serializable{
     }
 
     public String getImage(){
-        return this.image;
+        return image;
     }
 
     public void setImage(String image){
@@ -56,7 +56,7 @@ public class WxUser implements Serializable{
     }
 
     public String getPhone(){
-        return this.phone;
+        return phone;
     }
 
     public void setPhone(String phone){
@@ -64,7 +64,7 @@ public class WxUser implements Serializable{
     }
 
     public String getFriend(){
-        return this.friend;
+        return friend;
     }
 
     public void setFriend(String friend){
@@ -72,7 +72,7 @@ public class WxUser implements Serializable{
     }
 
     public String getCompany(){
-        return this.company;
+        return company;
     }
 
     public void setCompany(String company){

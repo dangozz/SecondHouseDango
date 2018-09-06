@@ -4,11 +4,11 @@ import com.yunji.dango.shiro.model.Role;
 import java.util.List;
 
 public interface RoleService extends BaseService<Role>{
-    List<Role> findAdminRole(Integer paramInteger);
+    List<Role> findAdminRole(Integer id);
 
-    Integer deleteAdminRole(Integer paramInteger);
+    Integer deleteAdminRole(Integer id);
 
     Integer updateRolePermisson(List paramList);
 
-    Integer deleteRolePermissionByRoleId(Integer paramInteger);
+    Integer deleteRolePermissionByRoleId(Integer id);
 }

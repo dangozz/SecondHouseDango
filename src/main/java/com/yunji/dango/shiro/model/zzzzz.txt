@@ -1,0 +1,11 @@
+public class BrokerDetail {
+
+    private Integer id
+    private Integer wxUserId
+    private Integer adminId
+    private Integer seniority
+    private String  name
+    private String  area
+    private Date    createTime
+
+}

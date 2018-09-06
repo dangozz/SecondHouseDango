@@ -54,7 +54,7 @@ public class SecondHouseDetail{
 
     public String getLongitude()
     {
-        return this.longitude;
+        return longitude;
     }
 
     public void setLongitude(String longitude)
@@ -64,7 +64,7 @@ public class SecondHouseDetail{
 
     public String getLatitude()
     {
-        return this.latitude;
+        return latitude;
     }
 
     public void setLatitude(String latitude)
@@ -74,7 +74,7 @@ public class SecondHouseDetail{
 
     public String getUserName()
     {
-        return this.userName;
+        return userName;
     }
 
     public void setUserName(String userName)
@@ -84,7 +84,7 @@ public class SecondHouseDetail{
 
     public String getPhone()
     {
-        return this.phone;
+        return phone;
     }
 
     public void setPhone(String phone)
@@ -94,7 +94,7 @@ public class SecondHouseDetail{
 
     public String getCity()
     {
-        return this.city;
+        return city;
     }
 
     public void setCity(String city)
@@ -104,7 +104,7 @@ public class SecondHouseDetail{
 
     public String getRegion()
     {
-        return this.region;
+        return region;
     }
 
     public void setRegion(String region)
@@ -114,7 +114,7 @@ public class SecondHouseDetail{
 
     public String getDetailAddress()
     {
-        return this.detailAddress;
+        return detailAddress;
     }
 
     public void setDetailAddress(String detailAddress)
@@ -124,7 +124,7 @@ public class SecondHouseDetail{
 
     public Integer getParentId()
     {
-        return this.parentId;
+        return parentId;
     }
 
     public void setParentId(Integer parentId)
@@ -134,6 +134,6 @@ public class SecondHouseDetail{
 
     public String toString()
     {
-        return "SecondHouseDetail{id=" + this.id + ", coreSelling='" + this.coreSelling + '\'' + ", proprietorState='" + this.proprietorState + '\'' + ", matching='" + this.matching + '\'' + ", longitude='" + this.longitude + '\'' + ", latitude='" + this.latitude + '\'' + ", userName='" + this.userName + '\'' + ", phone='" + this.phone + '\'' + ", city='" + this.city + '\'' + ", region='" + this.region + '\'' + ", detailAddress='" + this.detailAddress + '\'' + ", parentId=" + this.parentId + '}';
+        return "SecondHouseDetail{id=" + id + ", coreSelling='" + coreSelling + '\'' + ", proprietorState='" + proprietorState + '\'' + ", matching='" + matching + '\'' + ", longitude='" + longitude + '\'' + ", latitude='" + latitude + '\'' + ", userName='" + userName + '\'' + ", phone='" + phone + '\'' + ", city='" + city + '\'' + ", region='" + region + '\'' + ", detailAddress='" + detailAddress + '\'' + ", parentId=" + parentId + '}';
     }
 }

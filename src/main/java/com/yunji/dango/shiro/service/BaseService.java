@@ -12,13 +12,13 @@ public interface BaseService<T>{
 
     T findOneModel(Map<String, String> paramMap);
 
-    T findModelById(Integer paramInteger);
+    T findModelById(Integer id);
 
-    int insertModel(T paramT);
+    int insertModel(T t);
 
-    int deleteModel(T paramT);
+    int deleteModel(T t);
 
-    int updateModel(T paramT);
+    int updateModel(T t);
 
     int findTotal();
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunji.dango.shiro.dao.BrokerDetailDao">
+    <resultMap id="brokerDetailResultMap" type="com.yunji.dango.shiro.model.BrokerDetail">
+        <id column="id" property="id"/>
+        <result column="weuser_id" property="wxUserId"/>
+        <result column="admin_id" property="adminId"/>
+        <result column="seniority" property="seniority"/>
+        <result column="name" property="name"/>
+        <result column="area" property="area"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <sql id="table">
+        broker_detail
+    </sql>
+
+    <sql id="select">
+        select * from <include refid="table"/>
+    </sql>
+
+    <insert id="insertModel">
+        insert into <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.wxUserId != null ">wxuser_id,</if>
+            <if test="t.adminId != null ">admin_id,</if>
+            <if test="t.seniority != null ">seniority,</if>
+            <if test="t.name != null and t.name != ''">name,</if>
+            <if test="t.area != null and t.area != ''">area,</if>
+            <if test="t.createTime != null ">create_time,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="t.wxUserId != null ">#{t.wxUserId},</if>
+            <if test="t.adminId != null ">#{t.adminId},</if>
+            <if test="t.seniority != null ">#{t.seniority},</if>
+            <if test="t.name != null and t.name != ''">#{t.name},</if>
+            <if test="t.area != null and t.area != ''">#{t.area},</if>
+            <if test="t.createTime != null">#{t.createTime},</if>
+        </trim>
+    </insert>
+
+    <select id="findOneModel" resultType="com.yunji.dango.shiro.model.BrokerDetail">
+        <include refid="select"/>
+        where
+        <trim suffixOverrides="and">
+            <if test="id != null">id=#{id} and</if>
+            <if test="wxUserId != null ">wxuser_id=#{wxUserId} and</if>
+            <if test="adminId != null ">admin_id=#{adminId} and</if>
+            <if test="seniority != null ">seniority=#{seniority} and</if>
+            <if test="name != null and name !=''">name=#{name} and</if>
+            <if test="area != null and area !=''">area=#{area} and</if>
+            <if test="createTime != null">create_time=#{createTime} and</if>
+        </trim>
+        limit 1
+    </select>
+
+    <select id="findModelById" resultType="com.yunji.dango.shiro.model.BrokerDetail">
+        <include refid="select"/> where id =#{id}
+    </select>
+
+    <select id="findAllModel" resultMap="brokerDetailResultMap">
+        <include refid="select"/>
+    </select>
+
+</mapper>

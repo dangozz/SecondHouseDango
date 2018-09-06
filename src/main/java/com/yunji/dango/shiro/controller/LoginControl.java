@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/shiro")
 public class LoginControl{
     private Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 

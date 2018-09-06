@@ -39,7 +39,7 @@ public class Message{
     }
 
     public Integer getId(){
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id){
@@ -47,7 +47,7 @@ public class Message{
     }
 
     public Integer getFromId(){
-        return this.fromId;
+        return fromId;
     }
 
     public void setFromId(Integer fromId){
@@ -55,7 +55,7 @@ public class Message{
     }
 
     public Integer getToId(){
-        return this.toId;
+        return toId;
     }
 
     public void setToId(Integer toId){
@@ -63,7 +63,7 @@ public class Message{
     }
 
     public String getMessage(){
-        return this.message;
+        return message;
     }
 
     public void setMessage(String message){
@@ -71,7 +71,7 @@ public class Message{
     }
 
     public Integer getType(){
-        return this.type;
+        return type;
     }
 
     public void setType(Integer type){
@@ -79,7 +79,7 @@ public class Message{
     }
 
     public String getTime(){
-        return this.time;
+        return time;
     }
 
     public void setTime(String time){
@@ -87,7 +87,7 @@ public class Message{
     }
 
     public Integer getProjectId(){
-        return this.projectId;
+        return projectId;
     }
 
     public void setProjectId(Integer projectId){

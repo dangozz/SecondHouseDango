@@ -24,7 +24,7 @@ public class SecondHandHouse{
 
     public Integer getId()
     {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id)
@@ -34,7 +34,7 @@ public class SecondHandHouse{
 
     public String getTitel()
     {
-        return this.titel;
+        return titel;
     }
 
     public void setTitel(String titel)
@@ -44,7 +44,7 @@ public class SecondHandHouse{
 
     public String getPrice()
     {
-        return this.price;
+        return price;
     }
 
     public void setPrice(String price)
@@ -54,7 +54,7 @@ public class SecondHandHouse{
 
     public String getHouseType()
     {
-        return this.houseType;
+        return houseType;
     }
 
     public void setHouseType(String houseType)
@@ -64,7 +64,7 @@ public class SecondHandHouse{
 
     public String getArea()
     {
-        return this.area;
+        return area;
     }
 
     public void setArea(String area)
@@ -74,7 +74,7 @@ public class SecondHandHouse{
 
     public String getUnivalent()
     {
-        return this.univalent;
+        return univalent;
     }
 
     public void setUnivalent(String univalent)
@@ -84,7 +84,7 @@ public class SecondHandHouse{
 
     public String getOrientation()
     {
-        return this.orientation;
+        return orientation;
     }
 
     public void setOrientation(String orientation)
@@ -94,7 +94,7 @@ public class SecondHandHouse{
 
     public String getFloor()
     {
-        return this.floor;
+        return floor;
     }
 
     public void setFloor(String floor)
@@ -104,7 +104,7 @@ public class SecondHandHouse{
 
     public String getDecoration()
     {
-        return this.decoration;
+        return decoration;
     }
 
     public void setDecoration(String decoration)
@@ -114,7 +114,7 @@ public class SecondHandHouse{
 
     public String getIndexImg()
     {
-        return this.indexImg;
+        return indexImg;
     }
 
     public void setIndexImg(String indexImg)
@@ -124,7 +124,7 @@ public class SecondHandHouse{
 
     public long getFlag()
     {
-        return this.flag;
+        return flag;
     }
 
     public void setFlag(long flag)
@@ -134,7 +134,7 @@ public class SecondHandHouse{
 
     public String getType()
     {
-        return this.type;
+        return type;
     }
 
     public void setType(String type)
@@ -144,7 +144,7 @@ public class SecondHandHouse{
 
     public String getYear()
     {
-        return this.year;
+        return year;
     }
 
     public void setYear(String year)
@@ -154,7 +154,7 @@ public class SecondHandHouse{
 
     public String getRegion()
     {
-        return this.region;
+        return region;
     }
 
     public void setRegion(String region)
@@ -164,7 +164,7 @@ public class SecondHandHouse{
 
     public String getVillage()
     {
-        return this.village;
+        return village;
     }
 
     public void setVillage(String village)
@@ -174,7 +174,7 @@ public class SecondHandHouse{
 
     public Integer getAuditState()
     {
-        return this.auditState;
+        return auditState;
     }
 
     public void setAuditState(Integer auditState)
@@ -184,7 +184,7 @@ public class SecondHandHouse{
 
     public String getShelfState()
     {
-        return this.shelfState;
+        return shelfState;
     }
 
     public void setShelfState(String shelfState)
@@ -194,7 +194,7 @@ public class SecondHandHouse{
 
     public Date getDateTime()
     {
-        return this.dateTime;
+        return dateTime;
     }
 
     public void setDateTime(Date dateTime)
@@ -204,6 +204,6 @@ public class SecondHandHouse{
 
     public String toString()
     {
-        return "SecondHandHouse{id=" + this.id + ", titel='" + this.titel + '\'' + ", price='" + this.price + '\'' + ", houseType='" + this.houseType + '\'' + ", area='" + this.area + '\'' + ", univalent='" + this.univalent + '\'' + ", orientation='" + this.orientation + '\'' + ", floor='" + this.floor + '\'' + ", decoration='" + this.decoration + '\'' + ", indexImg='" + this.indexImg + '\'' + ", flag=" + this.flag + ", type='" + this.type + '\'' + ", year='" + this.year + '\'' + ", region='" + this.region + '\'' + ", village='" + this.village + '\'' + ", auditState=" + this.auditState + ", shelfState='" + this.shelfState + '\'' + ", dateTime=" + this.dateTime + '}';
+        return "SecondHandHouse{id=" + id + ", titel='" + titel + '\'' + ", price='" + price + '\'' + ", houseType='" + houseType + '\'' + ", area='" + area + '\'' + ", univalent='" + univalent + '\'' + ", orientation='" + orientation + '\'' + ", floor='" + floor + '\'' + ", decoration='" + decoration + '\'' + ", indexImg='" + indexImg + '\'' + ", flag=" + flag + ", type='" + type + '\'' + ", year='" + year + '\'' + ", region='" + this.region + '\'' + ", village='" + this.village + '\'' + ", auditState=" + this.auditState + ", shelfState='" + this.shelfState + '\'' + ", dateTime=" + this.dateTime + '}';
     }
 }

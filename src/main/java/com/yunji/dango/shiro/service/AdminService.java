@@ -6,5 +6,5 @@ import java.util.List;
 public interface AdminService extends BaseService<Admin>{
     Integer updateAdminRole(List paramList);
 
-    Integer deleteAdminRoleByAdminId(Integer paramInteger);
+    Integer deleteAdminRoleByAdminId(Integer id);
 }

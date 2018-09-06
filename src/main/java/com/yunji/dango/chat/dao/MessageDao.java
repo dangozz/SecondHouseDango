@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Param;
 public interface MessageDao extends BaseDao<Message>{
     Integer insertMessage(Message paramMessage);
 
-    Integer updateTypeByID(@Param("id") Integer paramInteger1, @Param("type") Integer paramInteger2);
+    Integer updateTypeByID(@Param("id") Integer id, @Param("type") Integer type);
 
-    Integer updateTypeByToID(@Param("fromId") Integer paramInteger1, @Param("toId") Integer paramInteger2, @Param("type") Integer paramInteger3);
+    Integer updateTypeByToID(@Param("fromId") Integer fromId, @Param("toId") Integer toId, @Param("type") Integer type);
 
-    List<Message> findMessageByUserId(@Param("id1") Integer paramInteger1, @Param("id2") Integer paramInteger2);
+    List<Message> findMessageByUserId(@Param("id1") Integer id1, @Param("id2") Integer id2);
 
     List<Message> findChatList(@Param("id") Integer id);
 

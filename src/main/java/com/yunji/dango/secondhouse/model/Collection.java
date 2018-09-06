@@ -19,7 +19,7 @@ public class Collection{
 
     public Integer getId()
     {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id)
@@ -29,7 +29,7 @@ public class Collection{
 
     public Integer getUserId()
     {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(Integer userId)
@@ -39,7 +39,7 @@ public class Collection{
 
     public Integer getTargetId()
     {
-        return this.targetId;
+        return targetId;
     }
 
     public void setTargetId(Integer targetId)
@@ -49,7 +49,7 @@ public class Collection{
 
     public Date getTime()
     {
-        return this.time;
+        return time;
     }
 
     public void setTime(Date time)

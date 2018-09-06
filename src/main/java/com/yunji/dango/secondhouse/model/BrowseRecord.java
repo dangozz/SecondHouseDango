@@ -21,7 +21,7 @@ public class BrowseRecord{
 
     public Integer getId()
     {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id)
@@ -31,7 +31,7 @@ public class BrowseRecord{
 
     public Integer getUserId()
     {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(Integer userId)
@@ -41,7 +41,7 @@ public class BrowseRecord{
 
     public Integer getTargetId()
     {
-        return this.targetId;
+        return targetId;
     }
 
     public void setTargetId(Integer targetId)
@@ -51,7 +51,7 @@ public class BrowseRecord{
 
     public Date getRecordTime()
     {
-        return this.recordTime;
+        return recordTime;
     }
 
     public void setRecordTime(Date recordTime)
@@ -61,7 +61,7 @@ public class BrowseRecord{
 
     public Integer getFlag()
     {
-        return this.flag;
+        return flag;
     }
 
     public void setFlag(Integer flag)

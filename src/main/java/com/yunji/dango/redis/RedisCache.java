@@ -156,7 +156,7 @@ public class RedisCache implements Cache{
     }
 
     public String getName(){
-        return this.name;
+        return name;
     }
 
     public void setName(String name){
@@ -164,7 +164,7 @@ public class RedisCache implements Cache{
     }
 
     public Object getNativeCache(){
-        return this.redisTemplate;
+        return redisTemplate;
     }
 
     public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate){
@@ -172,7 +172,7 @@ public class RedisCache implements Cache{
     }
 
     public long getExpireTime(){
-        return this.expireTime;
+        return expireTime;
     }
 
     public void setExpireTime(long expireTime){

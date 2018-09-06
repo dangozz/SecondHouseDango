@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 public interface AdminDao extends BaseDao<Admin>{
     Integer updateAdminRole(List paramList);
 
-    Integer deleteAdminRoleByAdminId(@Param("admin_id") Integer paramInteger);
+    Integer deleteAdminRoleByAdminId(@Param("admin_id") Integer id);
 }
