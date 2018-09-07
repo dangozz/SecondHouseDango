@@ -41,34 +41,36 @@ public class BrokerDetailControl {
     private WxUserService wxUserService;
 
     @RequestMapping("/addBrokerDetail.do")
-    public Map addBrokerDetail(@RequestBody String json){
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
-        BrokerDetail brokerDetail=getBrokerDetail(json);
-        String phone=jsonMap.get("phone");
-        String password=jsonMap.get("password");
-        Admin admin=new Admin();
+    public Map addBrokerDetail(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        BrokerDetail brokerDetail = getBrokerDetail(json);
+        String phone = jsonMap.get("phone");
+        String password = jsonMap.get("password");
+        Admin admin = new Admin();
         admin.setName(brokerDetail.getName());
         admin.setPhone(phone);
         admin.setPassword(MD5.MD5Encode(password));
-        int i1=adminService.insertModel(admin);
+        int i1 = adminService.insertModel(admin);
         brokerDetail.setAdminId(admin.getId());
 
-        WxUser wxUser=new WxUser();
+        WxUser wxUser = new WxUser();
         wxUser.setId(brokerDetail.getWxUserId());
         wxUser.setPhone(phone);
-        int i2=wxUserService.updateModel(wxUser);
+        int i2 = wxUserService.updateModel(wxUser);
 
-        int i=brokerDetailService.insertModel(brokerDetail);
-        if(i1==i2&&i2==1) {
+        int i = brokerDetailService.insertModel(brokerDetail);
+        if (i1 == i2 && i2 == 1) {
             return MapUtil.getReturnMapByNum(i, "新增");
-        }else {
-            return MapUtil.getReturnMapByNum(0,"新增");
+        } else {
+            return MapUtil.getReturnMapByNum(0, "新增");
         }
     }
 
     @RequestMapping("/findAllBrokerDetail.do")
-    public List findAllBrokerDetail(@RequestBody String json){
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
+    public List findAllBrokerDetail(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
         Integer page = Integer.parseInt(jsonMap.get("page"));
         Integer num = Integer.parseInt(jsonMap.get("num"));
 
@@ -81,15 +83,28 @@ public class BrokerDetailControl {
         return resultList;
     }
 
-    public BrokerDetail getBrokerDetail(String json){
-        BrokerDetail brokerDetail=new BrokerDetail();
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
-        String id=jsonMap.get("id");
-        String wxUserId=jsonMap.get("wxUserId");
-        String adminId=jsonMap.get("adminId");
-        String seniority=jsonMap.get("seniority");
-        String name=jsonMap.get("name");
-        String area=jsonMap.get("area");
+    @RequestMapping("/findBrokerDetailById.do")
+    public BrokerDetail findBrokerDetailById(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String id = jsonMap.get("id");
+        if (id != null && !"".equals(id)) {
+            return brokerDetailService.findModelById(Integer.parseInt(id));
+        } else {
+            return null;
+        }
+    }
+
+    public BrokerDetail getBrokerDetail(String json) {
+        BrokerDetail brokerDetail = new BrokerDetail();
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String id = jsonMap.get("id");
+        String wxUserId = jsonMap.get("wxUserId");
+        String adminId = jsonMap.get("adminId");
+        String seniority = jsonMap.get("seniority");
+        String name = jsonMap.get("name");
+        String area = jsonMap.get("area");
 
         if (id != null && !"".equals(id)) {
             brokerDetail.setId(Integer.parseInt(id));
