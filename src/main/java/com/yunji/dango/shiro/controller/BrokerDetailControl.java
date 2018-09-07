@@ -84,13 +84,13 @@ public class BrokerDetailControl {
     }
 
     @RequestMapping("/findBrokerDetailById.do")
-    public BrokerDetail findBrokerDetailById (@RequestBody String json){
+    public BrokerDetail findBrokerDetailById(@RequestBody String json) {
         Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
         }.getType());
         String id = jsonMap.get("id");
         if (id != null && !"".equals(id)) {
             return brokerDetailService.findModelById(Integer.parseInt(id));
-        }else {
+        } else {
             return null;
         }
     }
