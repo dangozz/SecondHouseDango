@@ -101,6 +101,7 @@ public class BrokerDetailControl {
         String adminId=jsonMap.get("adminId");
         String seniority=jsonMap.get("seniority");
         String name=jsonMap.get("name");
+        String idCard=jsonMap.get("idCard");
         String area=jsonMap.get("area");
 
         if (id != null && !"".equals(id)) {
@@ -116,6 +117,7 @@ public class BrokerDetailControl {
             brokerDetail.setSeniority(Integer.parseInt(seniority));
         }
         brokerDetail.setName(name);
+        brokerDetail.setIdCard(idCard);
         brokerDetail.setArea(area);
         brokerDetail.setCreateTime(new Date());
         return brokerDetail;

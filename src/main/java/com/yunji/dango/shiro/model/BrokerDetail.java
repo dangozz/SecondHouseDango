@@ -17,6 +17,7 @@ public class BrokerDetail {
     private Integer adminId;
     private Integer seniority;
     private String name;
+    private String idCard;
     private String area;
     private Date createTime;
 
