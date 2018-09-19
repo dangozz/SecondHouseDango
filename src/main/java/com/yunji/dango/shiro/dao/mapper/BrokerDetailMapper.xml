@@ -3,7 +3,7 @@
 <mapper namespace="com.yunji.dango.shiro.dao.BrokerDetailDao">
     <resultMap id="brokerDetailResultMap" type="com.yunji.dango.shiro.model.BrokerDetail">
         <id column="id" property="id"/>
-        <result column="weuser_id" property="wxUserId"/>
+        <result column="wxuser_id" property="wxUserId"/>
         <result column="admin_id" property="adminId"/>
         <result column="seniority" property="seniority"/>
         <result column="name" property="name"/>

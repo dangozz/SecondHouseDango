@@ -64,4 +64,36 @@ public class ChatControl {
         }
         return returnList;
     }
+
+    @RequestMapping("/findChatNumber.do")
+    public Map findChatNumber(@RequestBody String json) {
+        Map<String, Object> resultMap = new HashMap<>(3);
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        Integer id = Integer.parseInt(jsonMap.get("id"));
+        List<Message> messageIds = messageService.findChatList(id);
+        LinkedHashSet<Integer> allChat = new LinkedHashSet<>();
+        for (Message message : messageIds) {
+            if (message.getFromId().equals(id)) {
+                allChat.add(message.getToId());
+            } else if (message.getToId().equals(id)) {
+                allChat.add(message.getFromId());
+            }
+        }
+        if (allChat.size() != 0) {
+            int n = 0;
+            for (Integer i : allChat) {
+                Message message = messageService.findLastMessage(i, id);
+                if (message.getFromId().equals(id))
+                    n++;
+            }
+            int percentage = 100 * n / allChat.size();
+            resultMap.put("num", allChat.size());
+            resultMap.put("percentage", percentage);
+        } else {
+            resultMap.put("num", 0);
+            resultMap.put("percentage", 0);
+        }
+        return resultMap;
+    }
 }

@@ -54,7 +54,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin> implements AdminSer
     }
 
     @Override
-    @Cacheable(value={"dango_5"}, key="'admin_'+#map.get('id')")
+//    @Cacheable(value={"dango_5"}, key="'admin_'+#map.get('id')")
     public Admin findOneModel(Map<String, String> map){
         return (Admin)adminDao.findOneModel(map);
     }

@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yunji.dango.chat.model.WxUser;
 import com.yunji.dango.chat.service.WxUserService;
 import com.yunji.dango.shiro.model.Admin;
+import com.yunji.dango.shiro.model.BrokerDTO;
 import com.yunji.dango.shiro.model.BrokerDetail;
 import com.yunji.dango.shiro.service.AdminService;
 import com.yunji.dango.shiro.service.BrokerDetailService;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: DANGO
@@ -46,6 +44,35 @@ public class BrokerDetailControl {
         BrokerDetail brokerDetail=getBrokerDetail(json);
         String phone=jsonMap.get("phone");
         String password=jsonMap.get("password");
+        String idCard=jsonMap.get("idCard");
+        String wxUserId=jsonMap.get("wxUserId");
+
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("status", 400);
+        resultMap.put("message", "该微信用户已注册");
+
+        Map<String,String> wxUserIdMap=new HashMap<>(2);
+        wxUserIdMap.put("wxUserId",wxUserId);
+        BrokerDetail bd=brokerDetailService.findOneModel(wxUserIdMap);
+        if(bd!=null){
+            return resultMap;
+        }
+
+        Map<String,String> phoneMap=new HashMap<>(2);
+        phoneMap.put("phone",phone);
+        Admin phoneAdmin=adminService.findOneModel(phoneMap);
+        if(phoneAdmin!=null){
+            resultMap.put("message","手机号已注册");
+            return resultMap;
+        }
+        Map<String,String> idCardMap=new HashMap<>(2);
+        idCardMap.put("idCard",idCard);
+        BrokerDetail idCardBroker=brokerDetailService.findOneModel(idCardMap);
+        if(idCardBroker!=null){
+            resultMap.put("message","身份证号已注册");
+            return resultMap;
+        }
+
         Admin admin=new Admin();
         admin.setName(brokerDetail.getName());
         admin.setPhone(phone);
@@ -75,23 +102,49 @@ public class BrokerDetailControl {
         Page page_ = PageHelper.startPage(page, num, true);
         List<BrokerDetail> list = brokerDetailService.findAllModel();
 
-        List<BrokerDetail> resultList = new ArrayList<>();
-        resultList.addAll(list);
-
+        List<BrokerDTO> resultList = new ArrayList<>();
+        for(BrokerDetail brokerDetail:list){
+            BrokerDTO brokerDTO=new BrokerDTO();
+//            WxUser wxUser=wxUserService.findModelById(brokerDetail.getWxUserId());
+            Map<String,String> wxUserIdMap=new HashMap<>(2);
+            wxUserIdMap.put("id",brokerDetail.getWxUserId()+"");
+            WxUser wxUser=wxUserService.findOneModel(wxUserIdMap);
+            brokerDTO.setId(brokerDetail.getId());
+            brokerDTO.setWxUserId(brokerDetail.getWxUserId());
+            brokerDTO.setSeniority(brokerDetail.getSeniority());
+            brokerDTO.setName(brokerDetail.getName());
+            brokerDTO.setArea(brokerDetail.getArea());
+            brokerDTO.setIdCard(brokerDetail.getIdCard());
+            brokerDTO.setImage(wxUser.getImage());
+            brokerDTO.setCompany(wxUser.getCompany());
+            brokerDTO.setCreateTime(brokerDetail.getCreateTime());
+            resultList.add(brokerDTO);
+        }
         return resultList;
     }
 
     @RequestMapping("/findBrokerDetailById.do")
-    public BrokerDetail findBrokerDetailById(@RequestBody String json) {
+    public Map findBrokerDetailById(@RequestBody String json) {
         Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
         }.getType());
         String id = jsonMap.get("id");
+        Map<String, Object> resultMap = new HashMap<>();
         if (id != null && !"".equals(id)) {
-            return brokerDetailService.findModelById(Integer.parseInt(id));
+            BrokerDetail brokerDetail=brokerDetailService.findModelById(Integer.parseInt(id));
+//            WxUser wxUser=wxUserService.findModelById(brokerDetail.getWxUserId());
+            Map<String,String> wxUserIdMap=new HashMap<>(2);
+            wxUserIdMap.put("id",brokerDetail.getWxUserId()+"");
+            WxUser wxUser=wxUserService.findOneModel(wxUserIdMap);
+            resultMap.put("brokerDetail",brokerDetail);
+            resultMap.put("wxUser",wxUser);
+            resultMap.put("status", 200);
         } else {
-            return null;
+            resultMap.put("status", 400);
+            resultMap.put("message","查询失败");
         }
+        return resultMap;
     }
+
 
     public BrokerDetail getBrokerDetail(String json){
         BrokerDetail brokerDetail=new BrokerDetail();
@@ -122,4 +175,5 @@ public class BrokerDetailControl {
         brokerDetail.setCreateTime(new Date());
         return brokerDetail;
     }
+
 }
