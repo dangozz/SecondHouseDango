@@ -70,4 +70,10 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin> implements AdminSer
     public Integer deleteAdminRoleByAdminId(Integer id){
         return adminDao.deleteAdminRoleByAdminId(id);
     }
+
+    @Override
+    public List<Admin> findAdminByNameOrPhone(String nameOrPhone) {
+        return adminDao.findAdminByNameOrPhone(nameOrPhone);
+    }
+
 }

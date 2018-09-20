@@ -20,5 +20,6 @@ public class BrokerDetail {
     private String idCard;
     private String area;
     private Date createTime;
+    private Integer examine;
 
 }

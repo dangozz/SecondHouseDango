@@ -7,4 +7,6 @@ public interface AdminService extends BaseService<Admin>{
     Integer updateAdminRole(List paramList);
 
     Integer deleteAdminRoleByAdminId(Integer id);
+
+    List<Admin> findAdminByNameOrPhone(String nameOrPhone);
 }

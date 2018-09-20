@@ -44,4 +44,9 @@ public class BrokerDetailServiceImpl extends BaseServiceImpl<BrokerDetail> imple
     public List<BrokerDetail> findAllModel() {
         return brokerDetailDao.findAllModel();
     }
+
+    @Override
+    public Integer updateExamine(Map<String, String> map) {
+        return brokerDetailDao.updateExamine(map);
+    }
 }

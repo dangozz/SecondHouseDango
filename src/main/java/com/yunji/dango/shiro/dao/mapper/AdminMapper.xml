@@ -23,6 +23,10 @@
         select count(*) from <include refid="table"/>
     </select>
 
+    <select id="findAdminByNameOrPhone" resultMap="adminResultMap">
+        select * from <include refid="table"/> where position is null and department is null and (name like '%${nameOrPhone}%' or phone like '%${nameOrPhone}%')
+    </select>
+
     <select id="findOneModel" resultType="com.yunji.dango.shiro.model.Admin">
         select * from <include refid="table"/> where
         <trim suffixOverrides="and">

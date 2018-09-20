@@ -5,8 +5,8 @@
     <resultMap id="secondHouseImageResultMap" type="com.yunji.dango.secondhouse.model.SecondHouseImage">
         <id column="id" property="id"/>
         <result column="description" property="description"/>
-        <result column="imageUrl" property="imageUrl"/>
-        <result column="parentId" property="parentId"/>
+        <result column="imageurl" property="imageUrl"/>
+        <result column="parentid" property="parentId"/>
     </resultMap>
 
     <sql id="table">

@@ -8,4 +8,6 @@ public interface AdminDao extends BaseDao<Admin>{
     Integer updateAdminRole(List paramList);
 
     Integer deleteAdminRoleByAdminId(@Param("admin_id") Integer id);
+
+    List<Admin> findAdminByNameOrPhone(@Param("nameOrPhone") String nameOrPhone);
 }

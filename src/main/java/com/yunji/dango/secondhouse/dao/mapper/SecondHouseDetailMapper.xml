@@ -4,17 +4,17 @@
 
     <resultMap id="secondHouseDetailResultMap" type="com.yunji.dango.secondhouse.model.SecondHouseDetail">
         <id column="id" property="id"/>
-        <result column="coreSelling" property="coreSelling"/>
-        <result column="proprietorState" property="proprietorState"/>
+        <result column="coreselling" property="coreSelling"/>
+        <result column="proprietorstate" property="proprietorState"/>
         <result column="matching" property="matching"/>
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
-        <result column="userName" property="userName"/>
+        <result column="username" property="userName"/>
         <result column="phone" property="phone"/>
         <result column="city" property="city"/>
         <result column="region" property="region"/>
-        <result column="detailAddress" property="detailAddress"/>
-        <result column="parentId" property="parentId"/>
+        <result column="detailaddress" property="detailAddress"/>
+        <result column="parentid" property="parentId"/>
     </resultMap>
 
     <sql id="table">
@@ -23,6 +23,10 @@
 
     <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHouseDetail">
         select * from <include refid="table"/> where parentid=#{id} limit 1
+    </select>
+
+    <select id="findParentIdByPhone" resultType="java.lang.Integer">
+        select parentid from <include refid="table"/> where phone=#{phone}
     </select>
 
 </mapper>

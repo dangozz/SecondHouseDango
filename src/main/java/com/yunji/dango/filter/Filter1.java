@@ -25,7 +25,7 @@ public class Filter1 implements Filter{
         response.setHeader("Content-type", "text/html;charset=utf-8");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "POST");
+        response.addHeader("Access-Control-Allow-Methods", "*");
         response.addHeader("Access-Control-Max-Age", "1000");
 
         filterChain.doFilter(request, response);

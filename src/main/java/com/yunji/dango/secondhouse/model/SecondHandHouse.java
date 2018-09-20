@@ -21,6 +21,7 @@ public class SecondHandHouse{
     private Integer auditState;
     private String shelfState;
     private Date dateTime;
+    private Integer examine;
 
     public Integer getId()
     {
@@ -202,8 +203,16 @@ public class SecondHandHouse{
         this.dateTime = dateTime;
     }
 
+    public Integer getExamine() {
+        return examine;
+    }
+
+    public void setExamine(Integer examine) {
+        this.examine = examine;
+    }
+
     public String toString()
     {
-        return "SecondHandHouse{id=" + id + ", titel='" + titel + '\'' + ", price='" + price + '\'' + ", houseType='" + houseType + '\'' + ", area='" + area + '\'' + ", univalent='" + univalent + '\'' + ", orientation='" + orientation + '\'' + ", floor='" + floor + '\'' + ", decoration='" + decoration + '\'' + ", indexImg='" + indexImg + '\'' + ", flag=" + flag + ", type='" + type + '\'' + ", year='" + year + '\'' + ", region='" + this.region + '\'' + ", village='" + this.village + '\'' + ", auditState=" + this.auditState + ", shelfState='" + this.shelfState + '\'' + ", dateTime=" + this.dateTime + '}';
+        return "SecondHandHouse{id=" + id + ", titel='" + titel + '\'' + ", price='" + price + '\'' + ", houseType='" + houseType + '\'' + ", area='" + area + '\'' + ", univalent='" + univalent + '\'' + ", orientation='" + orientation + '\'' + ", floor='" + floor + '\'' + ", decoration='" + decoration + '\'' + ", indexImg='" + indexImg + '\'' + ", flag=" + flag + ", type='" + type + '\'' + ", year='" + year + '\'' + ", region='" + this.region + '\'' + ", village='" + this.village + '\'' + ", auditState=" + this.auditState + ", shelfState='" + this.shelfState + '\'' + ", dateTime=" + this.dateTime + ", examine='" + this.examine + '\'' + '}';
     }
 }

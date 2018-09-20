@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -39,63 +40,65 @@ public class BrokerDetailControl {
     private WxUserService wxUserService;
 
     @RequestMapping("/addBrokerDetail.do")
-    public Map addBrokerDetail(@RequestBody String json){
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
-        BrokerDetail brokerDetail=getBrokerDetail(json);
-        String phone=jsonMap.get("phone");
-        String password=jsonMap.get("password");
-        String idCard=jsonMap.get("idCard");
-        String wxUserId=jsonMap.get("wxUserId");
+    public Map addBrokerDetail(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        BrokerDetail brokerDetail = getBrokerDetail(json);
+        String phone = jsonMap.get("phone");
+        String password = jsonMap.get("password");
+        String idCard = jsonMap.get("idCard");
+        String wxUserId = jsonMap.get("wxUserId");
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("status", 400);
         resultMap.put("message", "该微信用户已注册");
 
-        Map<String,String> wxUserIdMap=new HashMap<>(2);
-        wxUserIdMap.put("wxUserId",wxUserId);
-        BrokerDetail bd=brokerDetailService.findOneModel(wxUserIdMap);
-        if(bd!=null){
+        Map<String, String> wxUserIdMap = new HashMap<>(2);
+        wxUserIdMap.put("wxUserId", wxUserId);
+        BrokerDetail bd = brokerDetailService.findOneModel(wxUserIdMap);
+        if (bd != null) {
             return resultMap;
         }
 
-        Map<String,String> phoneMap=new HashMap<>(2);
-        phoneMap.put("phone",phone);
-        Admin phoneAdmin=adminService.findOneModel(phoneMap);
-        if(phoneAdmin!=null){
-            resultMap.put("message","手机号已注册");
+        Map<String, String> phoneMap = new HashMap<>(2);
+        phoneMap.put("phone", phone);
+        Admin phoneAdmin = adminService.findOneModel(phoneMap);
+        if (phoneAdmin != null) {
+            resultMap.put("message", "手机号已注册");
             return resultMap;
         }
-        Map<String,String> idCardMap=new HashMap<>(2);
-        idCardMap.put("idCard",idCard);
-        BrokerDetail idCardBroker=brokerDetailService.findOneModel(idCardMap);
-        if(idCardBroker!=null){
-            resultMap.put("message","身份证号已注册");
+        Map<String, String> idCardMap = new HashMap<>(2);
+        idCardMap.put("idCard", idCard);
+        BrokerDetail idCardBroker = brokerDetailService.findOneModel(idCardMap);
+        if (idCardBroker != null) {
+            resultMap.put("message", "身份证号已注册");
             return resultMap;
         }
 
-        Admin admin=new Admin();
+        Admin admin = new Admin();
         admin.setName(brokerDetail.getName());
         admin.setPhone(phone);
         admin.setPassword(MD5.MD5Encode(password));
-        int i1=adminService.insertModel(admin);
+        int i1 = adminService.insertModel(admin);
         brokerDetail.setAdminId(admin.getId());
 
-        WxUser wxUser=new WxUser();
+        WxUser wxUser = new WxUser();
         wxUser.setId(brokerDetail.getWxUserId());
         wxUser.setPhone(phone);
-        int i2=wxUserService.updateModel(wxUser);
+        int i2 = wxUserService.updateModel(wxUser);
 
-        int i=brokerDetailService.insertModel(brokerDetail);
-        if(i1==i2&&i2==1) {
+        int i = brokerDetailService.insertModel(brokerDetail);
+        if (i1 == i2 && i2 == 1) {
             return MapUtil.getReturnMapByNum(i, "新增");
-        }else {
-            return MapUtil.getReturnMapByNum(0,"新增");
+        } else {
+            return MapUtil.getReturnMapByNum(0, "新增");
         }
     }
 
     @RequestMapping("/findAllBrokerDetail.do")
-    public List findAllBrokerDetail(@RequestBody String json){
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
+    public List findAllBrokerDetail(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
         Integer page = Integer.parseInt(jsonMap.get("page"));
         Integer num = Integer.parseInt(jsonMap.get("num"));
 
@@ -103,21 +106,23 @@ public class BrokerDetailControl {
         List<BrokerDetail> list = brokerDetailService.findAllModel();
 
         List<BrokerDTO> resultList = new ArrayList<>();
-        for(BrokerDetail brokerDetail:list){
-            BrokerDTO brokerDTO=new BrokerDTO();
+        for (BrokerDetail brokerDetail : list) {
 //            WxUser wxUser=wxUserService.findModelById(brokerDetail.getWxUserId());
-            Map<String,String> wxUserIdMap=new HashMap<>(2);
-            wxUserIdMap.put("id",brokerDetail.getWxUserId()+"");
-            WxUser wxUser=wxUserService.findOneModel(wxUserIdMap);
-            brokerDTO.setId(brokerDetail.getId());
-            brokerDTO.setWxUserId(brokerDetail.getWxUserId());
-            brokerDTO.setSeniority(brokerDetail.getSeniority());
-            brokerDTO.setName(brokerDetail.getName());
-            brokerDTO.setArea(brokerDetail.getArea());
-            brokerDTO.setIdCard(brokerDetail.getIdCard());
-            brokerDTO.setImage(wxUser.getImage());
-            brokerDTO.setCompany(wxUser.getCompany());
-            brokerDTO.setCreateTime(brokerDetail.getCreateTime());
+            Map<String, String> wxUserIdMap = new HashMap<>(2);
+            wxUserIdMap.put("id", brokerDetail.getWxUserId() + "");
+            WxUser wxUser = wxUserService.findOneModel(wxUserIdMap);
+            BrokerDTO brokerDTO = new BrokerDTO(brokerDetail,wxUser);
+//            brokerDTO.setId(brokerDetail.getId());
+//            brokerDTO.setWxUserId(brokerDetail.getWxUserId());
+//            brokerDTO.setSeniority(brokerDetail.getSeniority());
+//            brokerDTO.setName(brokerDetail.getName());
+//            brokerDTO.setArea(brokerDetail.getArea());
+//            brokerDTO.setIdCard(brokerDetail.getIdCard());
+//            brokerDTO.setImage(wxUser.getImage());
+//            brokerDTO.setCompany(wxUser.getCompany());
+//            brokerDTO.setCreateTime(brokerDetail.getCreateTime());
+//            brokerDTO.setExamine(brokerDetail.getExamine());
+//            brokerDTO.setPhone(wxUser.getPhone());
             resultList.add(brokerDTO);
         }
         return resultList;
@@ -130,32 +135,87 @@ public class BrokerDetailControl {
         String id = jsonMap.get("id");
         Map<String, Object> resultMap = new HashMap<>();
         if (id != null && !"".equals(id)) {
-            BrokerDetail brokerDetail=brokerDetailService.findModelById(Integer.parseInt(id));
+            BrokerDetail brokerDetail = brokerDetailService.findModelById(Integer.parseInt(id));
 //            WxUser wxUser=wxUserService.findModelById(brokerDetail.getWxUserId());
-            Map<String,String> wxUserIdMap=new HashMap<>(2);
-            wxUserIdMap.put("id",brokerDetail.getWxUserId()+"");
-            WxUser wxUser=wxUserService.findOneModel(wxUserIdMap);
-            resultMap.put("brokerDetail",brokerDetail);
-            resultMap.put("wxUser",wxUser);
+            Map<String, String> wxUserIdMap = new HashMap<>(2);
+            wxUserIdMap.put("id", brokerDetail.getWxUserId() + "");
+            WxUser wxUser = wxUserService.findOneModel(wxUserIdMap);
+            resultMap.put("brokerDetail", brokerDetail);
+            resultMap.put("wxUser", wxUser);
             resultMap.put("status", 200);
         } else {
             resultMap.put("status", 400);
-            resultMap.put("message","查询失败");
+            resultMap.put("message", "查询失败");
         }
         return resultMap;
     }
 
+    @RequestMapping("/updateExamine.do")
+    public Map updateExamine(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String id = jsonMap.get("id");
+        String examine = jsonMap.get("examine");
+        Map<String, Object> resultMap = new HashMap<>();
+        int n = -1;
+        try {
+            Integer.parseInt(id);
+            Integer.parseInt(examine);
+            Map<String, String> examineMap = new HashMap<>(3);
+            examineMap.put("id", id);
+            examineMap.put("examine", examine);
+            n = brokerDetailService.updateExamine(examineMap);
+        } catch (Exception e) {
+            resultMap.put("status", 400);
+            resultMap.put("message", "入参错误");
+        }
+        if(n==0) {
+            resultMap.put("status", 400);
+            resultMap.put("message", "修改失败");
+        }else if(n==1){
+            resultMap.put("status", 200);
+            resultMap.put("message", "修改成功");
+        }
+        return resultMap;
+    }
 
-    public BrokerDetail getBrokerDetail(String json){
-        BrokerDetail brokerDetail=new BrokerDetail();
-        Map<String,String> jsonMap=new Gson().fromJson(json,new TypeToken<Map<String,String>>(){}.getType());
-        String id=jsonMap.get("id");
-        String wxUserId=jsonMap.get("wxUserId");
-        String adminId=jsonMap.get("adminId");
-        String seniority=jsonMap.get("seniority");
-        String name=jsonMap.get("name");
-        String idCard=jsonMap.get("idCard");
-        String area=jsonMap.get("area");
+    @RequestMapping("/findBrokerByNameOrPhone.do")
+    public List findBrokerByNameOrPhone(@RequestBody String json) {
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String nameOrPhone=jsonMap.get("nameOrPhone");
+        List<Admin> admins=adminService.findAdminByNameOrPhone(nameOrPhone);
+        List<BrokerDTO> resultList = new ArrayList<>();
+        if(admins!=null&&admins.size()!=0){
+            for (Admin admin:admins){
+                Integer adminId=admin.getId();
+                Map<String,String> adminIdMap=new HashMap<>(2);
+                adminIdMap.put("adminId",""+adminId);
+                BrokerDetail brokerDetail=brokerDetailService.findOneModel(adminIdMap);
+                if(brokerDetail!=null){
+                    adminIdMap.clear();
+                    adminIdMap.put("id",""+brokerDetail.getWxUserId());
+                    WxUser wxUser=wxUserService.findOneModel(adminIdMap);
+                    BrokerDTO brokerDTO=new BrokerDTO(brokerDetail,wxUser);
+                    resultList.add(brokerDTO);
+                }
+            }
+        }
+        return resultList;
+    }
+
+
+    public BrokerDetail getBrokerDetail(String json) {
+        BrokerDetail brokerDetail = new BrokerDetail();
+        Map<String, String> jsonMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {
+        }.getType());
+        String id = jsonMap.get("id");
+        String wxUserId = jsonMap.get("wxUserId");
+        String adminId = jsonMap.get("adminId");
+        String seniority = jsonMap.get("seniority");
+        String name = jsonMap.get("name");
+        String idCard = jsonMap.get("idCard");
+        String area = jsonMap.get("area");
 
         if (id != null && !"".equals(id)) {
             brokerDetail.setId(Integer.parseInt(id));

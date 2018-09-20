@@ -7,6 +7,8 @@ import com.yunji.dango.shiro.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SecondHouseDetailServiceImpl extends BaseServiceImpl<SecondHouseDetail> implements SecondHouseDetailService{
     @Autowired
@@ -20,5 +22,10 @@ public class SecondHouseDetailServiceImpl extends BaseServiceImpl<SecondHouseDet
     @Override
     public SecondHouseDetail findModelById(Integer id){
         return secondHouseDetailDao.findModelById(id);
+    }
+
+    @Override
+    public List<Integer> findParentIdByPhone(String phone) {
+        return secondHouseDetailDao.findParentIdByPhone(phone);
     }
 }

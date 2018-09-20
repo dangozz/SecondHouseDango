@@ -49,7 +49,7 @@ public class SecondHouseControl{
         SecondHouseImage secondHouseImage = secondHouseImageService.findModelById(id);
 
         WxUser wxUser = (WxUser)this.redisCache.getObject("wxuser" + openid);
-        if ((wxUser == null) && (openid != null)){
+        if ((wxUser == null) && (openid != null && !"".equals(openid))){
             Map<String, String> openidMap = new HashMap<>();
             openidMap.put("openid", openid);
             wxUser = wxUserService.findOneModel(openidMap);

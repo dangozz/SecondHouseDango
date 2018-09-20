@@ -6,29 +6,42 @@
         <id column="id" property="id"/>
         <result column="titel" property="titel"/>
         <result column="price" property="price"/>
-        <result column="houseType" property="houseType"/>
+        <result column="housetype" property="houseType"/>
         <result column="area" property="area"/>
         <result column="univalent" property="univalent"/>
         <result column="orientation" property="orientation"/>
         <result column="floor" property="floor"/>
         <result column="decoration" property="decoration"/>
-        <result column="indexImg" property="indexImg"/>
+        <result column="indeximg" property="indexImg"/>
         <result column="flag" property="flag"/>
         <result column="type" property="type"/>
         <result column="year" property="year"/>
         <result column="region" property="region"/>
         <result column="village" property="village"/>
-        <result column="auditState" property="auditState"/>
-        <result column="shelfState" property="shelfState"/>
-        <result column="dateTime" property="dateTime"/>
+        <result column="auditstate" property="auditState"/>
+        <result column="shelfstate" property="shelfState"/>
+        <result column="datetime" property="dateTime"/>
+        <result column="examine" property="examine"/>
     </resultMap>
 
     <sql id="table">
         opening_secondhandhouse
     </sql>
 
-    <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHandHouse">
-        select * from <include refid="table"/> where id=#{id} limit 1
+    <sql id="select">
+        select * from <include refid="table"/>
+    </sql>
+
+    <select id="findAllModel" resultMap="secondHandHouseResultMap">
+        <include refid="select"/>
     </select>
+
+    <select id="findModelById" resultType="com.yunji.dango.secondhouse.model.SecondHandHouse">
+        <include refid="select"/> where id=#{id} limit 1
+    </select>
+
+    <update id="updateExamine">
+        update <include refid="table"/> set examine=#{examine} where id =#{id}
+    </update>
 
 </mapper>
