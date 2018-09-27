@@ -27,7 +27,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     }
 
     @Override
-    @Cacheable(cacheNames={"dango_5"}, key="'role'")
+//    @Cacheable(cacheNames={"dango_5"}, key="'role'")
     public List<Role> findAllModel(){
         return roleDao.findAllModel();
     }

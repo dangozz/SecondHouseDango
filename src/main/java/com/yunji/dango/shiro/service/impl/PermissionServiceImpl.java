@@ -27,7 +27,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
     }
 
     @Override
-    @Cacheable(value={"dango_5"}, key="'permission'")
+//    @Cacheable(value={"dango_5"}, key="'permission'")
     public List<Permission> findAllModel(){
         return permissionDao.findAllModel();
     }

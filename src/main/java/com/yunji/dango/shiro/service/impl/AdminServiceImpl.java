@@ -27,7 +27,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin> implements AdminSer
     }
 
     @Override
-    @Cacheable(value={"dango_5"}, key="'admin'")
+//    @Cacheable(value={"dango_5"}, key="'admin'")
     public List<Admin> findAllModel(){
         return adminDao.findAllModel();
     }
